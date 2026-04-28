@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <title>Simple To-Do</title>
+
+    <!-- AngularJS -->
+    <script src="angular-1.8.2/angular-1.8.2/angular.min.js"></script>
+</head>
+
+<body ng-controller="myCtrl">
+
+<h2>To-Do List</h2>
+
+<!-- Add Task -->
+<input type="text" ng-model="task">
+<button ng-click="add()">Add</button>
+
+<ul>
+    <li ng-repeat="t in tasks">
+        {{t}}
+
+        <button ng-click="edit($index)">Edit</button>
+        <button ng-click="delete($index)">Delete</button>
+    </li>
+</ul>
+
+<script>
+var app = angular.module("myApp", []);
+
+app.controller("myCtrl", function($scope) {
+
+    // Default tasks
+    $scope.tasks = ["Study", "Write notes", "Attend class"];
+
+    // Add task
+    $scope.add = function() {
+        if ($scope.task) {
+            $scope.tasks.push($scope.task);
+            $scope.task = "";
+        }
+    };
+
+    // Delete task
+    $scope.delete = function(index) {
+        $scope.tasks.splice(index, 1);
+    };
+
+    // Edit task
+    $scope.edit = function(index) {
+        var updated = prompt("Edit task:", $scope.tasks[index]);
+        if (updated !== null) {
+            $scope.tasks[index] = updated;
+        }
+    };
+
+});
+</script>
+
+</body>
+</html>
